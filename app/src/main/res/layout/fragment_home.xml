@@ -1,0 +1,139 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fra_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="example.caift.sms.mysecure.fragment.HomeFragment">
+
+    <RelativeLayout
+        android:id="@+id/Rel1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!--Top Image-->
+
+        <ImageView
+            android:id="@+id/Topimg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="fitXY"
+            android:src="@drawable/home_bg_top" />
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@id/Topimg">
+
+            <ImageView
+                android:id="@+id/Bottomimg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="bottom|center_horizontal"
+                android:scaleType="fitXY"
+                android:src="@drawable/home_bg_bottom" />
+
+
+            <ImageButton
+                android:id="@+id/MainBtn"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
+                android:background="@null"
+                android:paddingBottom="35dp"
+                android:src="@drawable/ic_main_btn" />
+
+
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:id="@+id/sub_linear1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <Button
+                android:id="@+id/btn1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="20dp"
+                android:layout_weight="1"
+                android:background="#fff"
+                android:drawableTop="@drawable/ic_loc"
+                android:gravity="center"
+                android:paddingTop="30dp"
+                android:text="Current Location"
+                android:textAlignment="center"
+                android:textColor="#585757" />
+
+            <Button
+                android:id="@+id/btn2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="20dp"
+                android:layout_weight="1"
+                android:background="#fff"
+                android:drawableTop="@drawable/ic_uber"
+                android:paddingTop="30dp"
+                android:text="Call Cab"
+                android:textAlignment="center"
+                android:textColor="#585757" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/sub_linear2"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_below="@id/sub_linear1">
+
+
+            <Button
+                android:id="@+id/btn3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="20dp"
+                android:layout_weight="1"
+                android:background="#fff"
+                android:drawableTop="@drawable/ic_helpline_btn"
+                android:gravity="center"
+                android:paddingTop="30dp"
+                android:text="Helpline"
+                android:textAlignment="center"
+                android:textColor="#585757" />
+
+            <Button
+                android:id="@+id/btn4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="20dp"
+                android:layout_weight="1"
+                android:background="#fff"
+                android:drawableTop="@drawable/ic_about_btn"
+                android:paddingTop="30dp"
+                android:text="About Us"
+                android:textAlignment="center"
+                android:textColor="#585757" />
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabadd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:background="#1d1d29"
+        android:backgroundTint="@android:color/black"
+        android:src="@drawable/ic_add" />
+
+
+</FrameLayout>
