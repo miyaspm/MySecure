@@ -71,12 +71,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         }
 
         Log.i("Dummy1", "Dummmy");
-        SharedPreferences prefs = getActivity().getSharedPreferences("MyServiceLocation", Context.MODE_PRIVATE);
-        Lat1 = prefs.getString("Latitude", "");
-        Lng1 = prefs.getString("Longitude", "");
 
-        Log.i("Latitude", Lat1);
-        Log.i("Longitude", Lng1);
 
 
 
@@ -102,10 +97,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
 
         fab = (FloatingActionButton) rootView.findViewById(R.id.fabadd);
-
-
-
-
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -145,6 +136,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onClick(View v) {
 
+                SharedPreferences prefs = getActivity().getSharedPreferences("MyServiceLocation", Context.MODE_PRIVATE);
+                Lat1 = prefs.getString("Latitude", "");
+                Lng1 = prefs.getString("Longitude", "");
+
+                Log.i("Latitude", Lat1);
+                Log.i("Longitude", Lng1);
+
                 if (no1 == "" && no2 == ""){
 
                     Intent in = new Intent(getActivity(), AddNumbers.class);
@@ -156,30 +154,30 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
                 else{
 
-                    String textmsg = "https://www.google.com/maps/@"+Lat1+","+Lng1+",19z";
-                    String number = "9388808013";
+                    String textmsg = " Here I am https://www.google.com/maps/@"+Lat1+","+Lng1+",19z";
+                    String numbers[] = {"9388808013","7356622545"};
+                    //String numbers[] = {no1, no2};
 
                     SmsManager sendsm = SmsManager.getDefault();
-                    sendsm.sendTextMessage(number, null, textmsg, null,null);
-                    Toast.makeText(getActivity(), "Message Sent", Toast.LENGTH_LONG).show();
-                    Log.i("else", number);
+                    for(String number : numbers) {
+                        sendsm.sendTextMessage(number, null, textmsg, null, null);
+                        Toast.makeText(getActivity(), "Message Sent", Toast.LENGTH_LONG).show();
+                        Log.i("else", number);
+                    }
 
+                    String phno1="112";
+                    Intent i = new Intent(Intent.ACTION_CALL,Uri.parse("tel:" + phno1));
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_NO_USER_ACTION);
+                    startActivity(i);
                 }
 
 
             }
         });
 
-
-
-
-
-
         btn1.setOnClickListener(this);
-
         btn3.setOnClickListener(this);
         btn4.setOnClickListener(this);
-
 
         return rootView;
 
@@ -189,6 +187,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
 
 
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+    }
 
     @Override
     public void onClick(View v) {

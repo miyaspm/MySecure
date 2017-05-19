@@ -147,7 +147,7 @@ public class Login_activity extends AppCompatActivity implements View.OnClickLis
         }
 
 
-
+        //service for background location
         Intent intent = new Intent(this, MyService.class);
         startService(intent);
 
