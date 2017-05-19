@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -57,13 +58,15 @@ public class MyService extends Service implements LocationListener, Runnable {
             Log.w("Location", "From Service: " + location.getLatitude() + "," + location.getLongitude());
             String data=location.getLatitude() + "," + location.getLongitude();
             Toast.makeText(getBaseContext(),(String)data, Toast.LENGTH_SHORT).show();
+            String lat = Double.valueOf(location.getLatitude()).toString();
+            String lng = Double.valueOf(location.getLongitude()).toString();
 
-            Intent intent = new Intent("android.intent.action.LOCATION");
-            intent.putExtra("latitude", location.getLatitude());
-            intent.putExtra("longitude", location.getLongitude());
+            SharedPreferences prefs = getApplicationContext().getSharedPreferences("MyServiceLocation", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = prefs.edit();
 
-            //String[] myLoc = new String[] {location.getLatitude(), location.getLongitude()};
-            sendBroadcast(intent);
+            editor.putString("Latitude", lat);
+            editor.putString("Longitude", lng);
+            editor.commit();
         }
     }
     @Override
@@ -79,7 +82,7 @@ public class MyService extends Service implements LocationListener, Runnable {
     public void run() {
         Log.w("Timer","From Service "+i);
         i = i+1;
-        handler.postDelayed(this,1000);
+        handler.postDelayed(this,5000);
     }
 
 

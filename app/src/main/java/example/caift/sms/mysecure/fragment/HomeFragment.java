@@ -39,25 +39,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     private FloatingActionButton fab;
 
-    public String MY_LAT = "";
-    public String MY_LONG = "";
-
-
-
     private String mParam1;
     private String mParam2;
 
+    public String Lat1;
+    public String Lng1;
+
     private OnFragmentInteractionListener mListener;
-
-    private BroadcastReceiver receiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            double lat = intent.getDoubleExtra("latitude", 0);
-            double lng = intent.getDoubleExtra("longitude", 0);
-            Log.i("BROADCAST", String.valueOf(lat).concat(String.valueOf(lng)));
-        }
-    };
-
 
     public HomeFragment() {
 
@@ -82,8 +70,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-        Intent intent = new Intent(getActivity(), MyService.class);
+        Log.i("Dummy1", "Dummmy");
+        SharedPreferences prefs = getActivity().getSharedPreferences("MyServiceLocation", Context.MODE_PRIVATE);
+        Lat1 = prefs.getString("Latitude", "");
+        Lng1 = prefs.getString("Longitude", "");
 
+        Log.i("Latitude", Lat1);
+        Log.i("Longitude", Lng1);
 
 
 
@@ -163,13 +156,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
                 else{
 
-//                    String textmsg = "https://www.google.com/maps/@"+var1+","+var2+",19z";
-//                    String number = "9388808013";
-//
-//                    SmsManager sendsm = SmsManager.getDefault();
-//                    sendsm.sendTextMessage(number, null, textmsg, null,null);
-//                    Toast.makeText(getActivity(), "Message Sent", Toast.LENGTH_LONG).show();
-//                    Log.i("else", number);
+                    String textmsg = "https://www.google.com/maps/@"+Lat1+","+Lng1+",19z";
+                    String number = "9388808013";
+
+                    SmsManager sendsm = SmsManager.getDefault();
+                    sendsm.sendTextMessage(number, null, textmsg, null,null);
+                    Toast.makeText(getActivity(), "Message Sent", Toast.LENGTH_LONG).show();
+                    Log.i("else", number);
 
                 }
 
