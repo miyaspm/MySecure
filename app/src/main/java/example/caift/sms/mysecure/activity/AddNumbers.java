@@ -94,6 +94,8 @@ public class AddNumbers extends AppCompatActivity implements View.OnClickListene
         btn1.setOnClickListener(this);
         btn2.setOnClickListener(this);
 
+        //finish();
+
     }
 
     @Override
@@ -158,6 +160,7 @@ public class AddNumbers extends AppCompatActivity implements View.OnClickListene
                             editor.commit();
                             Toast.makeText(AddNumbers.this, "Successfully Inserted Number 1", Toast.LENGTH_LONG).show();
                             Log.i("ActivityResult1", no1);
+                            //finish();
                         }
                         pCur.close();
                         // column index of the email
@@ -216,6 +219,7 @@ public class AddNumbers extends AppCompatActivity implements View.OnClickListene
                             editor.commit();
                             Toast.makeText(AddNumbers.this, "Successfully Inserted Number 2", Toast.LENGTH_LONG).show();
                             Log.i("ActivityResult2", no2);
+                            //finish();
                         }
                         pCur.close();
                         // column index of the email
@@ -241,5 +245,14 @@ public class AddNumbers extends AppCompatActivity implements View.OnClickListene
         } else {
 
         }
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        Intent intent = new Intent(this, home_activity.class);
+        startActivity(intent);
     }
 }
