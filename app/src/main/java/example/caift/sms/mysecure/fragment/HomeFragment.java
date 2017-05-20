@@ -182,10 +182,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                     Intent i = new Intent(Intent.ACTION_CALL,Uri.parse("tel:" + phno1));
                     i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_NO_USER_ACTION);
                     startActivity(i);
-
-
-
-
                 }
 
 
