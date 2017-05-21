@@ -242,4 +242,12 @@ public class AddNumbers extends AppCompatActivity implements View.OnClickListene
 
         }
     }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(this, home_activity.class);
+        startActivity(intent);
+    }
 }

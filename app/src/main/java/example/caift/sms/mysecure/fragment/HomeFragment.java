@@ -6,8 +6,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
+import android.hardware.Camera;
+import android.hardware.camera2.CameraManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -44,6 +47,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     public String Lat1;
     public String Lng1;
+
+    private Camera camera;
+    private Camera.Parameters params;
+    private boolean isFlashOn = false;
+
 
     private OnFragmentInteractionListener mListener;
 
@@ -169,6 +177,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                     Intent i = new Intent(Intent.ACTION_CALL,Uri.parse("tel:" + phno1));
                     i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_NO_USER_ACTION);
                     startActivity(i);
+
+                    BlinkFlash();
                 }
 
 
@@ -185,6 +195,41 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     }
 
+////////////////// Start of Flash Light Blinking Code for Panic Button/////////////////
+    private void BlinkFlash(){
+
+        String myString = "010101010101";
+        long blinkDelay =50; //Delay in ms
+        camera = Camera.open();
+
+
+        for (int i = 0; i < myString.length(); i++) {
+            if (myString.charAt(i) == '0') {
+                params = camera.getParameters();
+                params.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
+                camera.setParameters(params);
+                camera.startPreview();
+                isFlashOn = true;
+
+
+
+            } else {
+                params = camera.getParameters();
+                params.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
+                camera.setParameters(params);
+                camera.stopPreview();
+                isFlashOn = false;
+
+            }
+            try {
+                Thread.sleep(blinkDelay);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+////////////////// End of Flash Light Blinking Code for Panic Button/////////////////
 
 
 
@@ -258,13 +303,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
          void onFragmentInteraction(Uri uri);
     }
-
-
-
-
-
-
-
 
 
 }
