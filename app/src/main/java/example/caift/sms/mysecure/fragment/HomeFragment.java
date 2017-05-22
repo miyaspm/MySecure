@@ -163,8 +163,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 else{
 
                     String textmsg = " Here I am https://www.google.com/maps/@"+Lat1+","+Lng1+",19z";
-                    String numbers[] = {"9388808013","7356622545"};
-                    //String numbers[] = {no1, no2};
+                    //String numbers[] = {"9388808013","7356622545"};
+                    String numbers[] = {no1, no2};
 
                     SmsManager sendsm = SmsManager.getDefault();
                     for(String number : numbers) {
@@ -198,8 +198,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 ////////////////// Start of Flash Light Blinking Code for Panic Button/////////////////
     private void BlinkFlash(){
 
-        String myString = "010101010101";
-        long blinkDelay =50; //Delay in ms
+        String myString = "010101010101010101010101010101010101010101010101";
+        long blinkDelay =100; //Delay in ms
         camera = Camera.open();
 
 
