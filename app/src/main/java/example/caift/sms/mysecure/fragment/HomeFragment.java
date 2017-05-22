@@ -8,6 +8,8 @@ import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.hardware.Camera;
 import android.hardware.camera2.CameraManager;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -163,8 +165,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 else{
 
                     String textmsg = " Here I am https://www.google.com/maps/@"+Lat1+","+Lng1+",19z";
-                    //String numbers[] = {"9388808013","7356622545"};
-                    String numbers[] = {no1, no2};
+                    String numbers[] = {"9388808013","7356622545"};
+                    //String numbers[] = {no1, no2};
 
                     SmsManager sendsm = SmsManager.getDefault();
                     for(String number : numbers) {
@@ -173,12 +175,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                         Log.i("else", number);
                     }
 
-                    String phno1="112";
+                    String phno1="9388808013";
                     Intent i = new Intent(Intent.ACTION_CALL,Uri.parse("tel:" + phno1));
                     i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_NO_USER_ACTION);
                     startActivity(i);
 
                     BlinkFlash();
+
+                    //AlarmPlay();
                 }
 
 
@@ -195,6 +199,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     }
 
+
+
 ////////////////// Start of Flash Light Blinking Code for Panic Button/////////////////
     private void BlinkFlash(){
 
@@ -204,6 +210,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
 
         for (int i = 0; i < myString.length(); i++) {
+            Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+            Ringtone r = RingtoneManager.getRingtone(getActivity().getApplicationContext(), notification);
+            r.play();
             if (myString.charAt(i) == '0') {
                 params = camera.getParameters();
                 params.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
@@ -230,6 +239,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     }
 
 ////////////////// End of Flash Light Blinking Code for Panic Button/////////////////
+
+
+//    private void AlarmPlay(){
+//
+//        Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+//        Ringtone r = RingtoneManager.getRingtone(getActivity().getApplicationContext(), notification);
+//        r.play();
+//    }
 
 
 
