@@ -42,9 +42,9 @@ public class MyService extends Service implements LocationListener, Runnable {
 
             return;
         }
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,this);
-        handler.postDelayed(this,5000);
+//        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 30 * 1000, 0, this);
+        handler.postDelayed(this, 30 * 1000);
     }
     @Override
     public void onDestroy() {
@@ -57,7 +57,7 @@ public class MyService extends Service implements LocationListener, Runnable {
         if (location != null){
             Log.w("Location", "From Service: " + location.getLatitude() + "," + location.getLongitude());
             String data=location.getLatitude() + "," + location.getLongitude();
-            Toast.makeText(getBaseContext(),(String)data, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getBaseContext(),(String)data, Toast.LENGTH_SHORT).show();
             String lat = Double.valueOf(location.getLatitude()).toString();
             String lng = Double.valueOf(location.getLongitude()).toString();
 
@@ -78,11 +78,12 @@ public class MyService extends Service implements LocationListener, Runnable {
     @Override
     public void onProviderDisabled(String provider) {
     }
+
     @Override
     public void run() {
         Log.w("Timer","From Service "+i);
         i = i+1;
-        handler.postDelayed(this,5000);
+        handler.postDelayed(this, 30 * 1000);
     }
 
 

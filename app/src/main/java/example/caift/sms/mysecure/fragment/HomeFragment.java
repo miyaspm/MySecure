@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.hardware.Camera;
 import android.hardware.camera2.CameraManager;
+import android.media.AudioManager;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -53,6 +54,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private Camera camera;
     private Camera.Parameters params;
     private boolean isFlashOn = false;
+
+    private AudioManager audioManager;
+    private Ringtone ringtone;
+    boolean isRinging = false;
 
 
     private OnFragmentInteractionListener mListener;
@@ -204,15 +209,19 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 ////////////////// Start of Flash Light Blinking Code for Panic Button/////////////////
     private void BlinkFlash(){
 
-        String myString = "010101010101010101010101010101010101010101010101";
-        long blinkDelay =100; //Delay in ms
+        String myString = "0101010101010101010101010101";
+        long blinkDelay = 100; //Delay in ms
         camera = Camera.open();
+
+        Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+        Ringtone r = RingtoneManager.getRingtone(getActivity().getApplicationContext(), notification);
+        r.play();
 
 
         for (int i = 0; i < myString.length(); i++) {
-            Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-            Ringtone r = RingtoneManager.getRingtone(getActivity().getApplicationContext(), notification);
-            r.play();
+
+
+
             if (myString.charAt(i) == '0') {
                 params = camera.getParameters();
                 params.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
@@ -243,7 +252,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
 //    private void AlarmPlay(){
 //
-//        Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+//        Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
 //        Ringtone r = RingtoneManager.getRingtone(getActivity().getApplicationContext(), notification);
 //        r.play();
 //    }

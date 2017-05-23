@@ -133,6 +133,8 @@ public class Login_activity extends AppCompatActivity implements View.OnClickLis
 
         setContentView(R.layout.activity_login_activity);
 
+        getKeyHash();
+
         sharedPref = SharedPrefApp.getInstance();
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
@@ -174,20 +176,34 @@ public class Login_activity extends AppCompatActivity implements View.OnClickLis
                 .build();
 
 
-        try {
-            PackageInfo info = getPackageManager().getPackageInfo(
-                    "example.caift.sms.mysecure",
-                    PackageManager.GET_SIGNATURES);
-            for (Signature signature : info.signatures) {
-                MessageDigest md = MessageDigest.getInstance("SHA");
-                md.update(signature.toByteArray());
-                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
-            }
-        } catch (PackageManager.NameNotFoundException e) {
+//        try {
+//            PackageInfo info = getPackageManager().getPackageInfo(
+//                    "example.caift.sms.mysecure",
+//                    PackageManager.GET_SIGNATURES);
+//            for (Signature signature : info.signatures) {
+//                MessageDigest md = MessageDigest.getInstance("SHA");
+//                md.update(signature.toByteArray());
+//                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+//            }
+//        } catch (PackageManager.NameNotFoundException e) {
+//
+//        } catch (NoSuchAlgorithmException e) {
+//
+//        }
 
-        } catch (NoSuchAlgorithmException e) {
 
-        }
+
+
+//        try {
+//            PackageInfo info = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_SIGNATURES);
+//            for (Signature signature : info.signatures) {
+//                MessageDigest md = MessageDigest.getInstance("SHA");
+//                md.update(signature.toByteArray());
+//                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+//            }
+//        } catch (PackageManager.NameNotFoundException e) {
+//        } catch (NoSuchAlgorithmException e) {
+//        }
 
 
         // Facebook Login//
@@ -278,6 +294,40 @@ public class Login_activity extends AppCompatActivity implements View.OnClickLis
 
 
     }
+
+    /////////start facebook Key Hash generation/////////////
+
+    private void getKeyHash() {
+
+        PackageInfo info;
+
+        try {
+            info=getPackageManager().getPackageInfo("example.caift.sms.mysecure",
+                    PackageManager.GET_SIGNATURES);
+
+            for (Signature signature:info.signatures)
+            {
+                MessageDigest md;
+                md=MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                String something=new String(Base64.encode(md.digest(),0));
+                Log.e("KEYHASH",something);
+
+            }
+        }catch (PackageManager.NameNotFoundException e)
+        {
+            Log.e("name not found",e.toString());
+        }catch (NoSuchAlgorithmException e)
+        {
+            Log.e("no such an algorithm",e.toString());
+        }catch (Exception e)
+        {
+            Log.e("Exception",e.toString());
+        }
+    }
+
+    /////////end facebook Key Hash generation/////////////
+
 
 
     @Override

@@ -72,7 +72,7 @@ public class home_activity extends AppCompatActivity {
 
     // urls to load navigation header background image
     // and profile image
-    private static final String urlNavHeaderBg = "http://api.androidhive.info/images/nav-menu-header-bg.jpg";
+//    private static final String urlNavHeaderBg = "http://api.androidhive.info/images/nav-menu-header-bg.jpg";
 
     // index to identify current nav menu item
     public static int navItemIndex = 0;
@@ -201,11 +201,6 @@ public class home_activity extends AppCompatActivity {
         // name, Email
         txtName.setText(username);
 
-        // loading header background image
-        Glide.with(this).load(urlNavHeaderBg)
-                .crossFade()
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(imgNavHeaderBg);
 
         // Loading profile image
         Glide.with(this).load(imageurl)
@@ -215,8 +210,7 @@ public class home_activity extends AppCompatActivity {
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(imgProfile);
 
-        // showing dot next to notifications label
-        //navigationView.getMenu().getItem(3).setActionView(R.layout.menu_dot);
+
     }
 
 
