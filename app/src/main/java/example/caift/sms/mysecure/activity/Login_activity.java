@@ -133,20 +133,25 @@ public class Login_activity extends AppCompatActivity implements View.OnClickLis
 
         setContentView(R.layout.activity_login_activity);
 
-        getKeyHash();
+        getKeyHash();// Facebook Hash Key Generation
 
         sharedPref = SharedPrefApp.getInstance();
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
-        if(pref.getBoolean("isLogin", false)){
 
+        //////////////////Start of Auto Login Code/////////////////////////
+
+        if(pref.getBoolean("isLogin", false)){
             // Condtion gets true if you are login
             updateUI(true);
         }else{
-
             // Condtion gets false if you are not login
             updateUI(false);
         }
+
+
+        //////////////////End of Auto Login Code/////////////////////////
+
 
 
         //service for background location
@@ -162,7 +167,7 @@ public class Login_activity extends AppCompatActivity implements View.OnClickLis
         }
 
 
-        //Google Login//
+        ///////////////////Start of Google Login////////////////////////
 
         ImageButton signInButton = (ImageButton) findViewById(R.id.google_sign_in_button);
         signInButton.setOnClickListener(this);
@@ -176,37 +181,12 @@ public class Login_activity extends AppCompatActivity implements View.OnClickLis
                 .build();
 
 
-//        try {
-//            PackageInfo info = getPackageManager().getPackageInfo(
-//                    "example.caift.sms.mysecure",
-//                    PackageManager.GET_SIGNATURES);
-//            for (Signature signature : info.signatures) {
-//                MessageDigest md = MessageDigest.getInstance("SHA");
-//                md.update(signature.toByteArray());
-//                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
-//            }
-//        } catch (PackageManager.NameNotFoundException e) {
-//
-//        } catch (NoSuchAlgorithmException e) {
-//
-//        }
+        ///////////////////End of Google Login////////////////////////
 
 
 
 
-//        try {
-//            PackageInfo info = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_SIGNATURES);
-//            for (Signature signature : info.signatures) {
-//                MessageDigest md = MessageDigest.getInstance("SHA");
-//                md.update(signature.toByteArray());
-//                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
-//            }
-//        } catch (PackageManager.NameNotFoundException e) {
-//        } catch (NoSuchAlgorithmException e) {
-//        }
-
-
-        // Facebook Login//
+        //////////////// Start of Facebook Login////////////////////
 
         ImageButton fblogin = (ImageButton) findViewById(R.id.fb_login);
         callbackManager = CallbackManager.Factory.create();
@@ -217,10 +197,6 @@ public class Login_activity extends AppCompatActivity implements View.OnClickLis
 
                 Log.d("fb_login_sdk", "callback success");
                 Toast.makeText(getApplicationContext(), "Facebook Success", Toast.LENGTH_LONG).show();
-
-
-
-
 
                 Bundle params = new Bundle();
                 params.putString("fields", "id,name,email,picture.type(large)");
@@ -293,6 +269,10 @@ public class Login_activity extends AppCompatActivity implements View.OnClickLis
         });
 
 
+        //////////////// End of Facebook Login////////////////////
+
+
+
     }
 
     /////////start facebook Key Hash generation/////////////
@@ -326,7 +306,7 @@ public class Login_activity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
-    /////////end facebook Key Hash generation/////////////
+    /////////End facebook Key Hash generation/////////////
 
 
 
@@ -342,15 +322,11 @@ public class Login_activity extends AppCompatActivity implements View.OnClickLis
 
         OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(mGoogleApiClient);
         if (opr.isDone()) {
-            // If the user's cached credentials are valid, the OptionalPendingResult will be "done"
-            // and the GoogleSignInResult will be available instantly.
             Log.d(TAG, "Got cached sign-in");
             GoogleSignInResult result = opr.get();
             handleSignInResult(result);
         } else {
-            // If the user has not previously signed in on this device or the sign-in has expired,
-            // this asynchronous branch will attempt to sign in the user silently.  Cross-device
-            // single sign-on will occur in this branch.
+
             //showProgressDialog();
             opr.setResultCallback(new ResultCallback<GoogleSignInResult>() {
                 @Override
@@ -383,13 +359,12 @@ public class Login_activity extends AppCompatActivity implements View.OnClickLis
     private void handleSignInResult(GoogleSignInResult result) {
         Log.d(TAG, "handleSignInResult:" + result.isSuccess());
         if (result.isSuccess()) {
-            // Signed in successfully, show authenticated UI.
-            GoogleSignInAccount acct = result.getSignInAccount();
 
+            GoogleSignInAccount acct = result.getSignInAccount();
 
             updateUI(true);
         } else {
-            // Signed out, show unauthenticated UI.
+
             updateUI(false);
         }
     }
@@ -403,9 +378,9 @@ public class Login_activity extends AppCompatActivity implements View.OnClickLis
             case R.id.google_sign_in_button:
                 signIn();
                 break;
-
-
         }
+
+
     }
 
 

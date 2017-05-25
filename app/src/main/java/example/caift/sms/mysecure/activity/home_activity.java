@@ -59,7 +59,7 @@ import example.caift.sms.mysecure.R;
 import example.caift.sms.mysecure.other.MyService;
 import mehdi.sakout.fancybuttons.FancyButton;
 
-public class home_activity extends AppCompatActivity {
+public class home_activity extends AppCompatActivity{
 
     private NavigationView navigationView;
     private DrawerLayout drawer;
@@ -95,13 +95,18 @@ public class home_activity extends AppCompatActivity {
     private boolean shouldLoadHomeFragOnBackPress = true;
     private Handler mHandler;
 
+
+
     //public ActionBarDrawerToggle actionBarDrawerToggle;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_activity);
+
+
 
 
         //Hamburger Icon Change
@@ -111,26 +116,18 @@ public class home_activity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         mHandler = new Handler();
-
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
-
-        // Navigation view header
         navHeader = navigationView.getHeaderView(0);
         txtName = (TextView) navHeader.findViewById(R.id.name);
-        //txtWebsite = (TextView) navHeader.findViewById(R.id.website);
         imgNavHeaderBg = (ImageView) navHeader.findViewById(R.id.img_header_bg);
         imgProfile = (ImageView) navHeader.findViewById(R.id.img_profile);
-
 
         // load toolbar titles from string resources
         activityTitles = getResources().getStringArray(R.array.nav_item_activity_titles);
 
-
-
         Intent intent = new Intent(this, MyService.class);
         startService(intent);
-
 
         // load nav menu header data
         loadNavHeader();
@@ -157,6 +154,7 @@ public class home_activity extends AppCompatActivity {
         ActionBar bar = getSupportActionBar();
         Drawable gradient = getResources().getDrawable( R.drawable.action_bar_bg);
         bar.setBackgroundDrawable(gradient);
+
 
 
         // Hide Title in the Action Bar
@@ -376,66 +374,6 @@ public class home_activity extends AppCompatActivity {
     }
 
 
-//
-//    public void Logout(){
-//
-//        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-//
-//        SharedPreferences.Editor editor = pref.edit();
-//
-//        editor.putBoolean("isLogin",false);
-//        editor.clear();
-//        editor.commit();
-//
-//
-//
-//
-//
-//        // Starting Login Activity
-//
-//
-//                if(mGoogleApiClient.isConnected()) {
-//                    Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(new ResultCallback<Status>() {
-//                        @Override
-//                        public void onResult(@NonNull Status status) {
-//                            if (status.isSuccess()) {
-//                                Log.i("Logged", "User Logged out");
-//                                Intent i = new Intent(home_activity.this, Login_activity.class);
-//                                // Closing all the Activities
-//                                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//
-//                                // Add new Flag to start new Activity
-//                                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                                startActivity(i);
-//                                finish();
-//                            }
-//                        }
-//                    });
-//                }
-//
-//
-//
-//
-//    }
-
-
-    private void updateUI(boolean isSignedIn) {
-        if (isSignedIn) {
-
-            startActivity(new Intent(home_activity.this, Login_activity.class));
-            //sharedPref.saveISLogged_IN(this, true);
-
-        }
-    }
-
-
-
-
-
-
-
-
-
 
     @Override
     public void onBackPressed() {
@@ -485,23 +423,40 @@ public class home_activity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_logout) {
+
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putBoolean("isLogin", false);
+            editor.clear();
+            editor.commit();
+
+            Intent intent = new Intent(this, Login_activity.class);
+            intent.putExtra("finish", true); // if you are checking for this in your other Activities
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
+                    Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                    Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            //finish();
             Toast.makeText(getApplicationContext(), "Logout user!", Toast.LENGTH_LONG).show();
             return true;
         }
 
-        // user is in notifications fragment
-        // and selected 'Mark all as Read'
-        if (id == R.id.action_mark_all_read) {
-            Toast.makeText(getApplicationContext(), "All notifications marked as read!", Toast.LENGTH_LONG).show();
-        }
 
-        // user is in notifications fragment
-        // and selected 'Clear All'
-        if (id == R.id.action_clear_notifications) {
-            Toast.makeText(getApplicationContext(), "Clear all notifications!", Toast.LENGTH_LONG).show();
-        }
+
+
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    public void signOut() {
+        Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
+                new ResultCallback<Status>() {
+                    @Override
+                    public void onResult(Status status) {
+
+                    }
+                });
     }
 
 

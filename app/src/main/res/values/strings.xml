@@ -40,6 +40,28 @@
 
     <string name="facebook_app_id">446678295677654</string>
     <string name="fb_login_protocol_scheme">fb446678295677654</string>
+    <string name="About_us">
+        Safety is always important for us and everyone is part of it. Regardless of men or women, everybody faces many problems on their safety. Accidents, kidnapping, sudden health issues etc. are some of the issues faced by all people. Especially, women and children are facing several threats to their safety. Every day we hear news of crimes against women at home, offices, streets etc. In the past few years, the safety of women in India has been down because of some continuous and terrible crimes against women.  In this scenario, some security instruments can be developed to build confidence among individuals who may be alone or in a situation that needs help from others. From this thought, CAIFT Business Solutions Pvt Ltd has come up with a Security App ‘UR SAFE’.
+        \n
+        \nFeatures:
+        \n
+        \n\u2022	Panic button
+        \n
+        \nWhen the user press this button, an emergency message automatically send to two pre-set numbers. Also, a call goes to emergency number 112. In addition to this, flash light starts blinking and alarm starts making big noise.
+        \n
+        \n\u2022	If the App works in the background, pressing the volume button also will make the call to emergency number, message to pre-set numbers, flash light on etc.
+        \n
+        \n\u2022	User’s current location can be found out through Google Map.
+        \n
+        \n\u2022	Help line section
+        \n
+        \nThis section includes important phone numbers like nearest Police Station number, General Helpline number, Women’s Helpline number, child helpline number etc.
+        \n
+        \n\u2022	There is a facility to call Uber taxi through one single pressing of button.
+        \n
+
+
+</string>
 
 
 </resources>
