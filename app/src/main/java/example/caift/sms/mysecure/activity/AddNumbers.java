@@ -16,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -94,6 +95,22 @@ public class AddNumbers extends AppCompatActivity implements View.OnClickListene
         btn1.setOnClickListener(this);
         btn2.setOnClickListener(this);
 
+
+
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // this takes the user 'back', as if they pressed the left-facing triangle icon on the main android toolbar.
+                // if this doesn't work as desired, another possibility is to call `finish()` here.
+                this.onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
@@ -104,12 +121,12 @@ public class AddNumbers extends AppCompatActivity implements View.OnClickListene
             Intent contactPickerIntent = new Intent(Intent.ACTION_PICK,
                     ContactsContract.Contacts.CONTENT_URI);
             startActivityForResult(contactPickerIntent, CONTACT_PICKER_RESULT1);
-            Log.i("Button", "Button111111111");
+            Log.i("Button", "Button1");
         } else if (v.getId() == R.id.add_btn2) {
             Intent contactPickerIntent = new Intent(Intent.ACTION_PICK,
                     ContactsContract.Contacts.CONTENT_URI);
             startActivityForResult(contactPickerIntent, CONTACT_PICKER_RESULT2);
-            Log.i("Button", "Button222222222");
+            Log.i("Button", "Button2");
         }
     }
 
@@ -146,9 +163,6 @@ public class AddNumbers extends AppCompatActivity implements View.OnClickListene
                         while (pCur.moveToNext()) {
                             String phone = pCur.getString(
                                     pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-
-
-
 
                             SharedPreferences storenum = getSharedPreferences(SMSNumbers, Context.MODE_PRIVATE);
                             String no1 = phone.toString();
@@ -204,9 +218,6 @@ public class AddNumbers extends AppCompatActivity implements View.OnClickListene
                         while (pCur.moveToNext()) {
                             String phone = pCur.getString(
                                     pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-
-
-
 
                             SharedPreferences storenum = getSharedPreferences(SMSNumbers, Context.MODE_PRIVATE);
                             String no2 = phone.toString();
