@@ -17,7 +17,7 @@
         <ImageView
             android:id="@+id/Topimg"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="400dp"
             android:scaleType="fitXY"
             android:src="@drawable/home_bg_top" />
 
@@ -53,7 +53,8 @@
         <LinearLayout
             android:id="@+id/sub_linear1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
 
 
             <Button
@@ -88,7 +89,7 @@
         <LinearLayout
             android:id="@+id/sub_linear2"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="wrap_content"
             android:layout_below="@id/sub_linear1">
 
 
