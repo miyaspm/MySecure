@@ -9,7 +9,7 @@
     <LinearLayout
         android:id="@+id/Layout1"
         android:layout_width="match_parent"
-        android:layout_height="450dp"
+        android:layout_height="350dp"
         android:background="#e8e8e8"
         android:weightSum="1"
         android:orientation="vertical">
@@ -46,56 +46,6 @@
             android:textColor="#aa6616"/>
 
     </LinearLayout>
-
-    <!--<RelativeLayout-->
-        <!--android:id="@+id/Layout3"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_below="@id/Layout2"-->
-        <!--android:orientation="vertical">-->
-
-        <!--<ImageView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:src="@drawable/ic_or"-->
-            <!--android:layout_centerInParent="true"/>-->
-
-
-    <!--</RelativeLayout>-->
-
-    <!--<LinearLayout-->
-        <!--android:id="@+id/Layout4"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_below="@id/Layout2"-->
-        <!--android:weightSum="1"-->
-        <!--android:layout_alignParentBottom="true">-->
-
-        <!--<Button-->
-            <!--android:layout_width="60dp"-->
-            <!--android:layout_height="60dp"-->
-            <!--android:background="@drawable/facebook_button"-->
-            <!--android:layout_weight="0.5"-->
-            <!--android:text="@string/fb_name"-->
-            <!--android:textColor="#fff"-->
-            <!--android:textStyle="bold"-->
-            <!--android:textAlignment="center"-->
-            <!--android:layout_marginLeft="10dp"/>-->
-
-        <!--<Button-->
-            <!--android:layout_width="60dp"-->
-            <!--android:layout_height="60dp"-->
-            <!--android:background="@drawable/google_plus_btn"-->
-            <!--android:layout_weight="0.5"-->
-            <!--android:text="@string/gplus_name"-->
-            <!--android:textColor="#fff"-->
-            <!--android:textStyle="bold"-->
-            <!--android:textAlignment="center"-->
-            <!--android:layout_marginRight="10dp"/>-->
-
-
-
-    <!--</LinearLayout>-->
 
     <RelativeLayout
         android:id="@+id/Rel1"
@@ -158,9 +108,6 @@
         />
 
 </RelativeLayout>
-
-
-
 
 
 </RelativeLayout>

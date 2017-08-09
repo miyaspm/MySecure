@@ -394,16 +394,34 @@ public class Login_activity extends AppCompatActivity implements View.OnClickLis
 
             if(account != null) {
                String googleUserName = account.getDisplayName().toString();
-               String googleImage = account.getPhotoUrl().toString();
-                Log.e(TAG, "Name: " + googleUserName + ", Image: " + googleImage);
+
+                if(account.getPhotoUrl()==null){
+
+                    SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                    SharedPreferences.Editor editor = sp.edit();
+                    editor.putString("UserName", googleUserName);
+                    editor.putBoolean("isLogin",true);
+                    editor.commit();
+
+
+                }
+                else {
+
+                    String googleImage = account.getPhotoUrl().toString();
+                    SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                    SharedPreferences.Editor editor = sp.edit();
+                    editor.putString("UserName", googleUserName);
+                    editor.putString("ImageUrl", googleImage);
+                    editor.putBoolean("isLogin",true);
+                    editor.commit();
+
+
+                }
+
+                Log.e(TAG, "Name: " + googleUserName);
 
                 //SharedPreferences sharedPref = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
-                SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                SharedPreferences.Editor editor = sp.edit();
-                editor.putString("UserName", googleUserName);
-                editor.putString("ImageUrl", googleImage);
-                editor.putBoolean("isLogin",true);
-                editor.commit();
+
             }
 
             handleSignInResult(result);

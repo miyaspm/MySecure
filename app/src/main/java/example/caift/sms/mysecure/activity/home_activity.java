@@ -107,13 +107,11 @@ public class home_activity extends AppCompatActivity{
         setContentView(R.layout.activity_home_activity);
 
 
-
-
         //Hamburger Icon Change
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_nav);
-
         setSupportActionBar(toolbar);
+
 
         mHandler = new Handler();
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

@@ -13,10 +13,16 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.hardware.Camera;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Handler;
 import android.os.Vibrator;
 import android.support.v4.app.ActivityCompat;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.widget.Toast;
@@ -30,41 +36,126 @@ public class VolumeBtn extends BroadcastReceiver {
     public static int i;
     final int MAX_ITERATION = 15;
     boolean clickedDown = false;
-    long beginningTime = 0;
+    long lastPress = 0;
     int seconds = 0;
     long millis = 0;
+    int beginningTime = 0;
+    public static boolean sIsAppWorkFinished = true;
 
-    //public static boolean sIsAppWorkFinished=true;
+
+
+    private Camera camera;
+    private Camera.Parameters params;
+    private boolean isFlashOn = false;
+
+    public String Lat1;
+    public String Lng1;
+
+
+
+
+
     @Override
     public void onReceive(final Context context, Intent intent) {
-        // beginningTime = System.currentTimeMillis();
-        // long totalTimePressed = System.currentTimeMillis() - beginningTime;
 
-        // Toast.makeText(context, "volum  Changed CHECK SMS"+beginningTime , Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, "On Receive" + i, Toast.LENGTH_LONG).show();
 
-        if (!clickedDown) {
-            millis = System.currentTimeMillis() - beginningTime;
-            seconds = (int) (millis / 1000);
-            int minutes = seconds / 60;
-            seconds = seconds % 60;
+        sIsReceived = true; // Make this true whenever isReceived called
 
-            if (beginningTime + 12 < seconds) {
-                Toast.makeText(context, "volum  Changed CHECK SMS" + seconds, Toast.LENGTH_SHORT).show();
-                String url = "tel:9750377439";
-                Intent dialIntent = new Intent(Intent.ACTION_CALL, Uri.parse(url));
-                dialIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                if (ActivityCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+        Handler handler = new Handler();
 
-                    return;
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                if (sIsReceived) {  // if its true it means user is still pressing the button
+                    i++;
+
                 }
-                context.startActivity(dialIntent);
+                if(i>=80) {
+                    Toast.makeText(context, "Volume Changed CHECK SMS" + i, Toast.LENGTH_SHORT).show();
 
-// Ok, the button has been clicked down for 2 seconds
+                    BlinkFlash();
+
+                    SharedPreferences prefs = context.getSharedPreferences("MyServiceLocation", Context.MODE_PRIVATE);
+                    Lat1 = prefs.getString("Latitude", "");
+                    Lng1 = prefs.getString("Longitude", "");
+
+                    Log.i("Latitude", Lat1);
+                    Log.i("Longitude", Lng1);
+
+                    String textmsg = " Here I am https://www.google.com/maps/@"+Lat1+","+Lng1+",19z";
+                    String numbers[] = {"9388808013","7356622545"};
+                    //String numbers[] = {no1, no2};
+
+                    SmsManager sendsm = SmsManager.getDefault();
+                    for(String number : numbers) {
+                        sendsm.sendTextMessage(number, null, textmsg, null, null);
+                        Toast.makeText(context, "Message Sent", Toast.LENGTH_LONG).show();
+                        Log.i("else", number);
+                    }
+
+                    String url = "tel:9388808013";
+                    Intent dialIntent = new Intent(Intent.ACTION_CALL, Uri.parse(url));
+                    dialIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    if (ActivityCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+
+                        return;
+                    }
+                    context.startActivity(dialIntent);
+                    i=0;
+                    Toast.makeText(context, "Volume Changed SMS" + i, Toast.LENGTH_SHORT).show();
+                }
+
+                sIsReceived=false;
+
             }
+        }, 2000);
+    }
 
-            seconds = 0;
+
+    ////////////////// Start of Flash Light Blinking Code for Panic Button/////////////////
+    private void BlinkFlash(){
 
 
+        String myString = "0101010101010101010101010101";
+        long blinkDelay = 100; //Delay in ms
+        camera = Camera.open();
+
+        for (int i = 0; i < myString.length(); i++) {
+
+
+
+            if (myString.charAt(i) == '0') {
+                params = camera.getParameters();
+                params.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
+                camera.setParameters(params);
+                camera.startPreview();
+                isFlashOn = true;
+
+
+
+            } else {
+                params = camera.getParameters();
+                params.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
+                camera.setParameters(params);
+                camera.stopPreview();
+                isFlashOn = false;
+
+            }
+            try {
+                Thread.sleep(blinkDelay);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
+
+////////////////// End of Flash Light Blinking Code for Panic Button/////////////////
+
+
+
+
+
+
 }

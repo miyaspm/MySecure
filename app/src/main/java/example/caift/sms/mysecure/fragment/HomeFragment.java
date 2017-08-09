@@ -278,8 +278,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 replaceFragment(fragment);
                 break;
 
-
-
             case R.id.btn3:
                 fragment = new NotificationsFragment();
                // title = "HelpLine";

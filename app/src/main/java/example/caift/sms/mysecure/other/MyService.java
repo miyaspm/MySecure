@@ -66,7 +66,7 @@ public class MyService extends Service implements LocationListener, Runnable {
         if (location != null){
             Log.w("Location", "From Service: " + location.getLatitude() + "," + location.getLongitude());
             String data=location.getLatitude() + "," + location.getLongitude();
-            //Toast.makeText(getBaseContext(),(String)data, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getBaseContext(),(String)data, Toast.LENGTH_SHORT).show();
             String lat = Double.valueOf(location.getLatitude()).toString();
             String lng = Double.valueOf(location.getLongitude()).toString();
 
