@@ -69,11 +69,6 @@ public class home_activity extends AppCompatActivity{
     private Toolbar toolbar;
 
 
-
-    // urls to load navigation header background image
-    // and profile image
-//    private static final String urlNavHeaderBg = "http://api.androidhive.info/images/nav-menu-header-bg.jpg";
-
     // index to identify current nav menu item
     public static int navItemIndex = 0;
 
@@ -83,7 +78,6 @@ public class home_activity extends AppCompatActivity{
     private static final String TAG_MOVIES = "movies";
     private static final String TAG_NOTIFICATIONS = "notifications";
     private static final String TAG_SETTINGS = "settings";
-//    private static final String LOGOUT = "logout";
     public static String CURRENT_TAG = TAG_HOME;
 
     public GoogleApiClient mGoogleApiClient;
@@ -95,23 +89,17 @@ public class home_activity extends AppCompatActivity{
     private boolean shouldLoadHomeFragOnBackPress = true;
     private Handler mHandler;
 
-
-
     //public ActionBarDrawerToggle actionBarDrawerToggle;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_activity);
 
-
         //Hamburger Icon Change
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_nav);
         setSupportActionBar(toolbar);
-
 
         mHandler = new Handler();
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -124,8 +112,8 @@ public class home_activity extends AppCompatActivity{
         // load toolbar titles from string resources
         activityTitles = getResources().getStringArray(R.array.nav_item_activity_titles);
 
-        Intent intent = new Intent(this, MyService.class);
-        startService(intent);
+//        Intent intent = new Intent(this, MyService.class);
+//        startService(intent);
 
         // load nav menu header data
         loadNavHeader();
@@ -153,25 +141,20 @@ public class home_activity extends AppCompatActivity{
         Drawable gradient = getResources().getDrawable( R.drawable.action_bar_bg);
         bar.setBackgroundDrawable(gradient);
 
-
-
         // Hide Title in the Action Bar
         //ActionBar actionBar = getSupportActionBar();
         if (bar != null) {
             bar.setDisplayShowTitleEnabled(true);
             bar.setDisplayShowHomeEnabled(false);
-
         }
 
        final ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.openDrawer, R.string.closeDrawer) {
-
 
             @Override
             public void onDrawerClosed(View drawerView) {
                 // Code here will be triggered once the drawer closes as we dont want anything to happen so we leave this blank
                 super.onDrawerClosed(drawerView);
             }
-
             @Override
             public void onDrawerOpened(View drawerView) {
                 // Code here will be triggered once the drawer open as we dont want anything to happen so we leave this blank
@@ -179,9 +162,19 @@ public class home_activity extends AppCompatActivity{
             }
         };
 
-
     }
 
+//    @Override
+//    protected void onStop() {
+//        super.onStop();
+//        stopService(new Intent(getApplicationContext(), MyService.class));
+//    }
+//
+//    @Override
+//    protected void onPause() {
+//        super.onPause();
+//        stopService(new Intent(getApplicationContext(), MyService.class));
+//    }
 
     public void setActionBarTitle(String title) {
 
@@ -191,7 +184,6 @@ public class home_activity extends AppCompatActivity{
     private void loadNavHeader() {
 
         SharedPreferences getdetails = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-
         String username = getdetails.getString("UserName", "");
         String imageurl = getdetails.getString("ImageUrl", "");
         // name, Email
@@ -205,7 +197,6 @@ public class home_activity extends AppCompatActivity{
                 .bitmapTransform(new CircleTransform(this))
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(imgProfile);
-
 
     }
 
@@ -221,7 +212,6 @@ public class home_activity extends AppCompatActivity{
         // just close the navigation drawer
         if (getSupportFragmentManager().findFragmentByTag(CURRENT_TAG) != null) {
             drawer.closeDrawers();
-
             return;
         }
 
@@ -235,8 +225,7 @@ public class home_activity extends AppCompatActivity{
                 // update the main content by replacing fragments
                 Fragment fragment = getHomeFragment();
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
-                        android.R.anim.fade_out);
+                fragmentTransaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
                 fragmentTransaction.replace(R.id.frame, fragment, CURRENT_TAG);
                 fragmentTransaction.commitAllowingStateLoss();
             }
@@ -280,11 +269,6 @@ public class home_activity extends AppCompatActivity{
                 // settings fragment
                 SettingsFragment settingsFragment = new SettingsFragment();
                 return settingsFragment;
-//
-//            case 5:
-//
-//                Logout();
-//
 
             default:
                 return new HomeFragment();
@@ -330,10 +314,6 @@ public class home_activity extends AppCompatActivity{
                         navItemIndex = 4;
                         CURRENT_TAG = TAG_SETTINGS;
                         break;
-//                    case R.id.logout_nav:
-//                        navItemIndex = 5;
-//                        CURRENT_TAG = LOGOUT;
-//                        break;
                     default:
                         navItemIndex = 0;
                 }
@@ -401,9 +381,9 @@ public class home_activity extends AppCompatActivity{
         // Inflate the menu; this adds items to the action bar if it is present.
 
         // show menu only when home fragment is selected
-        if (navItemIndex == 0) {
+        //if (navItemIndex == 0) {
             getMenuInflater().inflate(R.menu.main, menu);
-        }
+        //}
 
         // when fragment is notifications, load the menu created for notifications
         if (navItemIndex == 3) {
@@ -419,8 +399,19 @@ public class home_activity extends AppCompatActivity{
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
+
+        if (id == R.id.service_start){
+            Toast.makeText(getApplicationContext(), "Start Service", Toast.LENGTH_LONG).show();
+            item.setIcon(R.drawable.ic_stop_service);
+            //stopService(new Intent(getApplicationContext(), MyService.class));
+
+
+
+        }
+
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_logout) {
+
+      /*  if (id == R.id.action_logout) {
 
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
             SharedPreferences.Editor editor = preferences.edit();
@@ -430,14 +421,12 @@ public class home_activity extends AppCompatActivity{
 
             Intent intent = new Intent(this, Login_activity.class);
             intent.putExtra("finish", true); // if you are checking for this in your other Activities
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
-                    Intent.FLAG_ACTIVITY_CLEAR_TASK |
-                    Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
-            //finish();
+            finish();
             Toast.makeText(getApplicationContext(), "Logout user!", Toast.LENGTH_LONG).show();
             return true;
-        }
+        }*/
 
 
 

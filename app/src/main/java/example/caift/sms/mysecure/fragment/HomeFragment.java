@@ -151,6 +151,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onClick(View v) {
 
+                getActivity().startService(new Intent(getActivity(),MyService.class));
+
                 SharedPreferences prefs = getActivity().getSharedPreferences("MyServiceLocation", Context.MODE_PRIVATE);
                 Lat1 = prefs.getString("Latitude", "");
                 Lng1 = prefs.getString("Longitude", "");

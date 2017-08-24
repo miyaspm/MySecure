@@ -31,7 +31,7 @@ import java.util.List;
 
 import example.caift.sms.mysecure.R;
 
-public class AddNumbers extends AppCompatActivity implements View.OnClickListener {
+public class AddNumbers extends AppCompatActivity implements View.OnClickListener{//
 
 
     public static final String SMSNumbers = "SMSNum";
