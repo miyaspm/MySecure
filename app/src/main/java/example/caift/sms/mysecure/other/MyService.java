@@ -54,13 +54,21 @@ public class MyService extends Service implements LocationListener, Runnable {
         getApplicationContext().registerReceiver(myBroadcast, filter);
         Toast.makeText(getBaseContext(),"MyService", Toast.LENGTH_SHORT).show();
     }
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        locationManager.removeUpdates(this);
-        handler.removeCallbacks(this);
-        unregisterReceiver(myBroadcast);
-    }
+//    @Override
+//    public void onDestroy() {
+//        super.onDestroy();
+//        locationManager.removeUpdates(this);
+//        handler.removeCallbacks(this);
+//
+//        unregisterReceiver(myBroadcast);
+//    }
+
+
+
+
+
+
+
     @Override
     public void onLocationChanged(Location location) {
         if (location != null){

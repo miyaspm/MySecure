@@ -89,6 +89,8 @@ public class home_activity extends AppCompatActivity{
     private boolean shouldLoadHomeFragOnBackPress = true;
     private Handler mHandler;
 
+    public static boolean isServiceStart;
+
     //public ActionBarDrawerToggle actionBarDrawerToggle;
 
     @Override
@@ -164,17 +166,21 @@ public class home_activity extends AppCompatActivity{
 
     }
 
+
 //    @Override
-//    protected void onStop() {
-//        super.onStop();
-//        stopService(new Intent(getApplicationContext(), MyService.class));
-//    }
+//    protected void onResume() {
+//        super.onResume();
+//        if (!isServiceStart) {
+//            registerReceiver(myReceiver, new IntentFilter(...));
+//            isServiceStart = true;
+//        }
 //
-//    @Override
-//    protected void onPause() {
-//        super.onPause();
-//        stopService(new Intent(getApplicationContext(), MyService.class));
 //    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
 
     public void setActionBarTitle(String title) {
 
@@ -353,6 +359,9 @@ public class home_activity extends AppCompatActivity{
 
 
 
+
+
+
     @Override
     public void onBackPressed() {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -392,6 +401,35 @@ public class home_activity extends AppCompatActivity{
         return true;
     }
 
+
+//    public void ServiceStart(MenuItem item){
+//
+//        if (isServiceStart){
+//
+//            Intent intent = new Intent(this, MyService.class);
+//            startService(intent);
+//            item.setIcon(R.drawable.ic_stop_service);
+//
+//            Toast.makeText(this, "Service Started", Toast.LENGTH_LONG).show();
+//
+//
+//        }
+//
+//        else {
+//
+//            Intent intent = new Intent(this, MyService.class);
+//            stopService(intent);
+//            item.setIcon(R.drawable.ic_start_service);
+//            isServiceStart = true;
+//            Toast.makeText(this, "Service Stopped", Toast.LENGTH_LONG).show();
+//
+//        }
+//
+//
+//
+//
+//    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -401,9 +439,30 @@ public class home_activity extends AppCompatActivity{
 
 
         if (id == R.id.service_start){
-            Toast.makeText(getApplicationContext(), "Start Service", Toast.LENGTH_LONG).show();
-            item.setIcon(R.drawable.ic_stop_service);
-            //stopService(new Intent(getApplicationContext(), MyService.class));
+
+
+
+            if (!isServiceStart){
+
+                Intent intent = new Intent(this, MyService.class);
+                startService(intent);
+                item.setIcon(R.drawable.ic_stop_service);
+                isServiceStart = true;
+                Toast.makeText(getApplicationContext(), "Start Service", Toast.LENGTH_LONG).show();
+
+            }
+
+            else {
+                Intent intent = new Intent(this, MyService.class);
+                stopService(intent);
+                Intent i  = new Intent(this, home_activity.class);
+                startActivity(i);
+                item.setIcon(R.drawable.ic_start_service);
+                isServiceStart = false;
+                Toast.makeText(getApplicationContext(), "Stop Service", Toast.LENGTH_LONG).show();
+
+            }
+
 
 
 
